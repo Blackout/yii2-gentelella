@@ -9,25 +9,25 @@ namespace yiister\gentelella\widgets;
 
 use rmrevin\yii\fontawesome\component\Icon;
 use yii\base\Widget;
-use yii\helpers\Html;
+use yii\helpers\ChainHtml;
 
 class StatsTile extends Widget
 {
-    public $options = ['class' => 'tile-stats'];
-    public $icon;
-    public $header;
-    public $text;
-    public $number;
+	public $options = ['class' => 'tile-stats'];
+	public $icon;
+	public $header;
+	public $text;
+	public $number;
 
-    public function run()
-    {
-        echo Html::beginTag('div', $this->options);
-        if (empty($this->icon) === false) {
-            echo Html::tag('div', new Icon($this->icon), ['class' => 'icon']);
-        }
-        echo Html::tag('div', $this->number, ['class' => 'count']);
-        echo Html::tag('h3', $this->header);
-        echo Html::tag('p', $this->text);
-        echo Html::endTag('div');
-    }
+	public function run()
+	{
+		return	(new ChainHtml())->
+			start('div', $this->options)->
+				if(empty($this->icon) === false)->
+					tag('div', new Icon($this->icon), ['class' => 'icon'])->
+				tag('div', $this->number, ['class' => 'count'])->
+				tag('h3', $this->header)->
+				tag('p', $this->text)->
+			end('div');
+	}
 }
